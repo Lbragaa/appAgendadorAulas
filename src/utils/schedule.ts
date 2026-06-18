@@ -1,8 +1,12 @@
 import type { Lesson, NewLessonInput } from "../types/schedule";
 import { addMinutes, buildDateTime } from "./date";
 
-export function hasLessonOverlap(lessons: Lesson[], startsAt: Date, endsAt: Date): boolean {
+export function hasLessonOverlap(lessons: Lesson[], startsAt: Date, endsAt: Date, ignoredLessonId?: string): boolean {
   return lessons.some((lesson) => {
+    if (lesson.id === ignoredLessonId) {
+      return false;
+    }
+
     if (lesson.status === "canceled") {
       return false;
     }
@@ -23,7 +27,7 @@ export function createLessonFromInput(input: NewLessonInput): Omit<Lesson, "id">
     subjectId: input.subjectId,
     startsAt: startsAt.toISOString(),
     endsAt: endsAt.toISOString(),
-    status: "scheduled",
+    status: input.status,
     format: input.format,
     topic: input.topic.trim(),
     priceLabel: input.priceLabel.trim(),

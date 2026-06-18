@@ -13,6 +13,7 @@ type AgendaViewProps = {
   onSelectedStudentChange: (studentId: string) => void;
   onSelectedSubjectChange: (subjectId: string) => void;
   onOpenNewLesson: () => void;
+  onEditLesson: (lesson: Lesson) => void;
 };
 
 export function AgendaView({
@@ -26,6 +27,7 @@ export function AgendaView({
   onSelectedStudentChange,
   onSelectedSubjectChange,
   onOpenNewLesson,
+  onEditLesson,
 }: AgendaViewProps) {
   const weekDays = getWeekDays(selectedWeek);
   const visibleLessons = lessons
@@ -121,6 +123,9 @@ export function AgendaView({
 
                     return (
                       <article className="lesson-item" key={lesson.id}>
+                        <button className="link-button lesson-edit-button" onClick={() => onEditLesson(lesson)} type="button">
+                          Edit
+                        </button>
                         <div className="lesson-time">
                           {formatTime(lesson.startsAt)} - {formatTime(lesson.endsAt)}
                         </div>

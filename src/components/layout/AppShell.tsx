@@ -11,6 +11,7 @@ const navItems: Array<{ id: AppView; label: string; icon: ReactNode }> = [
   { id: "agenda", label: "Agenda", icon: <span className="inline-icon">A</span> },
   { id: "students", label: "Students", icon: <span className="inline-icon">S</span> },
   { id: "subjects", label: "Subjects", icon: <span className="inline-icon">T</span> },
+  { id: "metrics", label: "Metrics", icon: <span className="inline-icon">M</span> },
   { id: "settings", label: "Settings", icon: <span className="inline-icon">G</span> },
 ];
 

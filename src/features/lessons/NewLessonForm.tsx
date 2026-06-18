@@ -7,7 +7,9 @@ type NewLessonFormProps = {
   subjects: Subject[];
   settings: TeachingSettings;
   error: string;
+  mode: "create" | "edit";
   onChange: (form: NewLessonInput) => void;
+  onAddStudent: () => void;
   onSubmit: () => void;
 };
 
@@ -17,7 +19,9 @@ export function NewLessonForm({
   subjects,
   settings,
   error,
+  mode,
   onChange,
+  onAddStudent,
   onSubmit,
 }: NewLessonFormProps) {
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -28,19 +32,24 @@ export function NewLessonForm({
   return (
     <form className="new-lesson-form" onSubmit={handleSubmit}>
       <div>
-        <p className="eyebrow">Create</p>
-        <h2>New lesson</h2>
+        <p className="eyebrow">{mode === "edit" ? "Update" : "Create"}</p>
+        <h2>{mode === "edit" ? "Edit lesson" : "New lesson"}</h2>
       </div>
 
       <label>
         Student
-        <select value={form.studentId} onChange={(event) => onChange({ ...form, studentId: event.target.value })}>
-          {students.map((student) => (
-            <option key={student.id} value={student.id}>
-              {student.name}
-            </option>
-          ))}
-        </select>
+        <div className="inline-field-action">
+          <select value={form.studentId} onChange={(event) => onChange({ ...form, studentId: event.target.value })}>
+            {students.map((student) => (
+              <option key={student.id} value={student.id}>
+                {student.name}
+              </option>
+            ))}
+          </select>
+          <button className="secondary-button" onClick={onAddStudent} type="button">
+            Add
+          </button>
+        </div>
       </label>
 
       <label>
@@ -100,6 +109,16 @@ export function NewLessonForm({
       </div>
 
       <label>
+        Status
+        <select value={form.status} onChange={(event) => onChange({ ...form, status: event.target.value as NewLessonInput["status"] })}>
+          <option value="scheduled">Scheduled</option>
+          <option value="completed">Completed</option>
+          <option value="canceled">Canceled</option>
+          <option value="rescheduled">Rescheduled</option>
+        </select>
+      </label>
+
+      <label>
         Duration
         <input
           min="15"
@@ -135,7 +154,7 @@ export function NewLessonForm({
 
       <button className="primary-button full-width" type="submit">
         <span className="inline-icon">OK</span>
-        <span>Save lesson</span>
+        <span>{mode === "edit" ? "Update lesson" : "Save lesson"}</span>
       </button>
     </form>
   );

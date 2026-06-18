@@ -49,9 +49,17 @@ export type NewLessonInput = {
   date: string;
   startTime: string;
   durationMinutes: number;
+  status: LessonStatus;
   format: LessonFormat;
   topic: string;
   priceLabel: string;
   isPaid: boolean;
+  notes: string;
+};
+
+export type NewStudentInput = {
+  name: string;
+  email: string;
+  phone: string;
   notes: string;
 };
